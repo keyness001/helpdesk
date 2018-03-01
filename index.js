@@ -26,12 +26,20 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google')
+  passport.authenticate('google'),
+  (req, res) => {
+    console.log(req);
+  }
 );
 
 app.get('/', (req, res) => {
-  console.log(req.user);
+  res.send(req.user);
 })
 
-const PORT = process.env.PORT || 3000;
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+})
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT);
